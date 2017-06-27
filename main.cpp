@@ -34,7 +34,6 @@ public:
     main_window(int lines, int columns, int x0, int y0) {
         initscr();
         cbreak();
-        noecho();
         window_ = newwin(lines, columns, y0, x0);
         refresh();
     }
@@ -51,6 +50,7 @@ public:
             waddstr(window_, "5: Problem 11.5\n");
             waddstr(window_, "q: Quit the program\n");
             wrefresh(window_);
+        noecho();
             auto inputCh = getch();
             if (inputCh == 'q' || inputCh == 'Q')
                 break;
@@ -71,11 +71,13 @@ public:
         wclear(window_);
         waddstr(window_, "Enter the chain for starting point normalization (hit enter for default = 11076765543322): ");
         char chain[max_str];
+        echo();
         wgetnstr(window_, chain, max_str);
         std::string chainStr = *chain == 0 ? "11076765543322" : chain;
         waddstr(window_, "Normalized chain: ");
         waddstr(window_, normalize_chain_starting_point(chainStr).c_str());
         waddstr(window_, "\nPress any key to go back to main menu...");
+        noecho();
         wrefresh(window_);
         getch();
     }
@@ -84,10 +86,12 @@ public:
         wclear(window_);
         waddstr(window_, "Enter the chain for rotation normalization (hit enter for default = 0101030303323232212111): ");
         char chain[max_str];
+        echo();
         wgetnstr(window_, chain, max_str);
         std::string chainStr = *chain == 0 ? "0101030303323232212111" : chain;
         waddstr(window_, "Is the chain 4- or 8-coded (default = 4): ");
         wrefresh(window_);
+        noecho();
         int coding = getch() == '8' ? 8 : 4;
         waddstr(window_, "\nNormalized chain: ");
         waddstr(window_, compute_first_difference(chainStr, coding).c_str());
