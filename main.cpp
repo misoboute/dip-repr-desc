@@ -22,6 +22,7 @@ std::string normalize_chain_starting_point(const std::string& chain) {
 std::string compute_first_difference(const std::string& chain, int directions) {
     auto len = chain.size();
     ostringstream diffChain;
+    diffChain << (chain.front() - chain.back() + directions) % directions;
     for (int i = 0; i < len - 1; ++i) {
         diffChain << (chain[i + 1] - chain[i] + directions) % directions;
     }
@@ -41,11 +42,11 @@ public:
     void run_menu() {
         while (true) {
             wclear(window_);
-            waddstr(window_, "This is a demonstration of the solution to the problems at the end of chapter 11 of the book Digital "
-                    "Image Processing by author Gonzalez. Select a problem from the list below:\n\n");
+            waddstr(window_, "This is a demonstration of the solution to some of the problems at the end of chapter 11 of the "
+                    "book Digital Image Processing by author Gonzalez. Select a problem from the list below:\n\n");
             waddstr(window_, "1: Problem 11.1\n");
             waddstr(window_, "2: Problem 11.2\n");
-            waddstr(window_, "3: Problem 11.3\n");
+            waddstr(window_, "3: Problem 11.10\n");
             waddstr(window_, "4: Problem 11.4\n");
             waddstr(window_, "5: Problem 11.5\n");
             waddstr(window_, "q: Quit the program\n");
@@ -59,7 +60,7 @@ public:
             if (inputCh == '2')
                 problem_11_2();
             if (inputCh == '3')
-                problem_11_3();
+                problem_11_10();
             if (inputCh == '4')
                 problem_11_4();
             if (inputCh == '5')
@@ -93,16 +94,30 @@ public:
         wrefresh(window_);
         noecho();
         int coding = getch() == '8' ? 8 : 4;
-        waddstr(window_, "\nNormalized chain: ");
+        waddstr(window_, "\nFirst difference chain: ");
         waddstr(window_, compute_first_difference(chainStr, coding).c_str());
         waddstr(window_, "\nPress any key to go back to main menu...");
         wrefresh(window_);
         getch();
     }
 
-    void problem_11_3() {
+    void problem_11_10() {
         wclear(window_);
-        waddstr(window_, "Not implemented yet!");
+        waddstr(window_, "Enter the chain for shape number calculation (hit enter for default = 000332123211): ");
+        char chain[max_str];
+        echo();
+        wgetnstr(window_, chain, max_str);
+        std::string chainStr = *chain == 0 ? "000332123211" : chain;
+        waddstr(window_, "Is the chain 4- or 8-coded (default = 4): ");
+        wrefresh(window_);
+        noecho();
+        int coding = getch() == '8' ? 8 : 4;
+        auto difference = compute_first_difference(chainStr, coding);
+        auto shapeNum = normalize_chain_starting_point(difference);
+        waddstr(window_, "\nFirst difference chain: ");
+        waddstr(window_, difference.c_str());
+        waddstr(window_, "\nShape number: ");
+        waddstr(window_, shapeNum.c_str());
         waddstr(window_, "\nPress any key to go back to main menu...");
         wrefresh(window_);
         getch();
