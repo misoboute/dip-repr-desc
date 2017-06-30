@@ -47,8 +47,6 @@ public:
             waddstr(window_, "1: Problem 11.1\n");
             waddstr(window_, "2: Problem 11.2\n");
             waddstr(window_, "3: Problem 11.10\n");
-            waddstr(window_, "4: Problem 11.4\n");
-            waddstr(window_, "5: Problem 11.5\n");
             waddstr(window_, "q: Quit the program\n");
             wrefresh(window_);
         noecho();
@@ -61,10 +59,6 @@ public:
                 problem_11_2();
             if (inputCh == '3')
                 problem_11_10();
-            if (inputCh == '4')
-                problem_11_4();
-            if (inputCh == '5')
-                problem_11_5();
         }
     }
 
@@ -118,22 +112,6 @@ public:
         waddstr(window_, difference.c_str());
         waddstr(window_, "\nShape number: ");
         waddstr(window_, shapeNum.c_str());
-        waddstr(window_, "\nPress any key to go back to main menu...");
-        wrefresh(window_);
-        getch();
-    }
-
-    void problem_11_4() {
-        wclear(window_);
-        waddstr(window_, "Not implemented yet!");
-        waddstr(window_, "\nPress any key to go back to main menu...");
-        wrefresh(window_);
-        getch();
-    }
-
-    void problem_11_5() {
-        wclear(window_);
-        waddstr(window_, "Not implemented yet!");
         waddstr(window_, "\nPress any key to go back to main menu...");
         wrefresh(window_);
         getch();
